@@ -89,6 +89,7 @@ struct TokenLoginView: View {
         }
         
         UserSettings.shared.setAuthString()
+        UserSettings.shared.serverType = .nextcloud
         let (data, error) = await cookbookApi.getCategories(auth: UserSettings.shared.authString)
         
         if error != nil {

@@ -37,6 +37,16 @@ struct SettingsView: View {
                         
                         // TODO: Add actions
                     }
+                } else if userSettings.serverType == .webdav {
+                    VStack(alignment: .leading) {
+                        Text("WebDAV")
+                            .font(.title)
+                        Text("Username: \(userSettings.username)")
+                            .font(.subheadline)
+                        Text(userSettings.serverProtocol + userSettings.serverAddress)
+                            .font(.subheadline)
+                            .foregroundStyle(Color.secondary)
+                    }
                 }
                 Spacer()
             }
@@ -194,6 +204,7 @@ struct SettingsView: View {
         userSettings.username = ""
         userSettings.token = ""
         userSettings.authString = ""
+        CookbookApiWebDAV.reset()
         appState.deleteAllData()
         userSettings.onboarding = true
     }
@@ -234,6 +245,8 @@ extension SettingsView {
         }
         
         func getUserData() async {
+            // Avatar and user data are only available from a Nextcloud server
+            guard UserSettings.shared.serverType == .nextcloud else { return }
             let (data, _) = await NextcloudApi.getAvatar()
             let (userData, _) = await NextcloudApi.getHoverCard()
             

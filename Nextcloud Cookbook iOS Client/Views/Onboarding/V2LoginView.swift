@@ -167,6 +167,7 @@ struct V2LoginView: View {
             return
         }
         print("Login successful for user \(response.loginName)!")
+        UserSettings.shared.serverType = .nextcloud
         UserSettings.shared.username = response.loginName
         UserSettings.shared.token = response.appPassword
         let loginString = "\(UserSettings.shared.username):\(UserSettings.shared.token)"
