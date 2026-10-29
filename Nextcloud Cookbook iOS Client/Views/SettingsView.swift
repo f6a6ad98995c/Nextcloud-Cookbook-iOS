@@ -204,7 +204,7 @@ struct SettingsView: View {
 }
 
 extension SettingsView {
-    class ViewModel: ObservableObject {
+    @MainActor class ViewModel: ObservableObject {
         @Published var avatarImage: UIImage? = nil
         @Published var userData: UserData? = nil
         
@@ -237,10 +237,8 @@ extension SettingsView {
             let (data, _) = await NextcloudApi.getAvatar()
             let (userData, _) = await NextcloudApi.getHoverCard()
             
-            DispatchQueue.main.async {
-                self.avatarImage = data
-                self.userData = userData
-            }
+            self.avatarImage = data
+            self.userData = userData
         }
     }
 }

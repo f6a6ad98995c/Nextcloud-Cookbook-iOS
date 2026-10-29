@@ -85,7 +85,7 @@ struct V2LoginView: View {
                                 alertMessage = "A network error occured (\(error.rawValue))."
                                 showAlert = true
                             }
-                            if let loginRequest = loginRequest {
+                            if loginRequest != nil {
                                 presentBrowser = true
                                 //await UIApplication.shared.open(URL(string: loginRequest.login)!)
                             } else {
